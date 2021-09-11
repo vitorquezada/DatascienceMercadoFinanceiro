@@ -1,3 +1,8 @@
+---
+layout: content
+title:  "Arvore de decisão e Conjunto de arvore de decisão"
+---
+
 # Conceito (O que é? Pra que serve? )
 # Classes de Problemas com melhores resultados
 # Definição Teórica e Modelagem Matemática
