@@ -1,6 +1,5 @@
 ---
-layout: content
-title:  "Arvore de decisão e Conjunto de arvore de decisão"
+title:  "Árvore de decisão e Conjunto de arvore de decisão"
 ---
 
 # Conceito (O que é? Pra que serve? )
