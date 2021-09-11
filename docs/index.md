@@ -1,5 +1,5 @@
-1. [Aprendizado Supervisionado](aprendizado-supervisionado) **(Vitor Quezada)**
-    1. [K-Nearest Neighbors e Linear Models](aprendizado-supervisionado/k-nearest-neighbors-e-linear-models) **(Vitor Quezada)**
+1. [Aprendizado Supervisionado](/aprendizado-supervisionado) **(Vitor Quezada)**
+    1. [K-Nearest Neighbors e Linear Models](/aprendizado-supervisionado/k-nearest-neighbors-e-linear-models) **(Vitor Quezada)**
     2. [Naive Bayes Classifiers](Naive-Bayes-Classifiers) **(Vitor Quezada)**
     3. [Decision Treese Ensembles of Decisions Trees](Decision-Treese-Ensembles-of-Decisions-Trees) **(Vitor Quezada)**
     4. [Support Vector Machines](Support-Vector-Machines) **(Vitor Quezada)**
