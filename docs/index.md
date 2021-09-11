@@ -6,7 +6,7 @@
     5. [Neural Networks](aprendizado-supervisionado/Neural-Networks) **??**
     6. [Random Forest](aprendizado-supervisionado/Random-Forest) **(Victor)**
 2. [Aprendizado NÃO Supervisionado](aprendizado-nao-supervisionado) **??**
-    1. [PCA e AutoEncoder (Redução de Dimensionalidade)](aprendizado-nao-supervisionado/PCA-e-AutoEncoder-Redução-de-Dimensionalidade) **??**
+    1. [PCA e AutoEncoder (Redução de Dimensionalidade)](aprendizado-nao-supervisionado/PCA-e-AutoEncoder-Reducao-de-Dimensionalidade) **??**
     2. [K-Means Clustering](aprendizado-nao-supervisionado/K-Means-Clustering) **??**
     3. [Agglomerative Clustering](aprendizado-nao-supervisionado/Agglomerative-Clustering) **??**
     4. [DBSCAN](aprendizado-nao-supervisionado/DBSCAN) **??**
