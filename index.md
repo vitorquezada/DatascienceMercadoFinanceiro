@@ -1,37 +1,15 @@
-## Welcome to GitHub Pages
-
-You can use the [editor on GitHub](https://github.com/vitorquezada/DatascienceMercadoFinanceiro/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/vitorquezada/DatascienceMercadoFinanceiro/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+1. [Aprendizado Supervisionado](Aprendizado-Supervisionado) **(Vitor Quezada)**
+    1. [K-Nearest Neighbors e Linear Models](K-Nearest-Neighbors-e-Linear-Models) **(Vitor Quezada)**
+    2. [Naive Bayes Classifiers](Naive-Bayes-Classifiers) **(Vitor Quezada)**
+    3. [Decision Treese Ensembles of Decisions Trees](Decision-Treese-Ensembles-of-Decisions-Trees) **(Vitor Quezada)**
+    4. [Support Vector Machines](Support-Vector-Machines) **(Vitor Quezada)**
+    5. [Neural Networks](Neural-Networks) **??**
+    6. [Random Forest](Random-Forest) **(Victor)**
+2. [Aprendizado NÃO Supervisionado](Aprendizado-NÃO-Supervisionado) **??**
+    1. [PCA e AutoEncoder (Redução de Dimensionalidade)](PCA-e-AutoEncoder-Redução-de-Dimensionalidade) **??**
+    2. [K-Means Clustering](K-Means-Clustering) **??**
+    3. [Agglomerative Clustering](Agglomerative-Clustering) **??**
+    4. [DBSCAN](DBSCAN) **??**
+    5. [Deep Learning](Deep-Learning) **(Victor)**
+        1. [Redes Neurais Profundas](Redes-Neurais-Profundas) **(Victor)**
+        2. [Processamento de Linguagem Natural](Processamento-de-Linguagem-Natural) **(Victor)**
