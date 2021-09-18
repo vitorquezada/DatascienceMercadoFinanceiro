@@ -18,14 +18,14 @@ Difícilmente acontece um sobreajuste (overfitting), basta usar árvores suficie
 Com uma única árvore existe grande probabilidade de termos sobreajuste (overfitting), porém com várias árvores de decisão o peso é composto por todas e assim estamos gerando uma variancia no modelo. É um voto da maioria.
 
 # Vantagens e Desvantagens (limitações)
-Vantagens: * é incrivelmente versátil, pode utilizar valores binários, categóricos e numéricos.
-           * Precisa de pouco pré-processamento, os dados não precisam ser normalizados ou transformados.
-           * Pode rodar em paralelo em várias máquinas, o que resulta em processamento mais rápido.
-           * Ótimo com uma maior dimensionalidade (utiliza subconjuntos dos dados).
-           * É rápido para treinar pois usa subconjuntos.
-           * É robusto com outliers e dados não lineares.
-           * Cada árvore de decisão tem uma alta variancia e um pequeno bias, mas como é feito a média das árvores, é feito a média da variância para se ter uma variância moderada e um pequeno bias.
-Desvantagens: *a interpretabilidade é difícil.
+Vantagens: - é incrivelmente versátil, pode utilizar valores binários, categóricos e numéricos.
+           - Precisa de pouco pré-processamento, os dados não precisam ser normalizados ou transformados.
+           - Pode rodar em paralelo em várias máquinas, o que resulta em processamento mais rápido.
+           - Ótimo com uma maior dimensionalidade (utiliza subconjuntos dos dados).
+           - É rápido para treinar pois usa subconjuntos.
+           - É robusto com outliers e dados não lineares.
+           - Cada árvore de decisão tem uma alta variancia e um pequeno bias, mas como é feito a média das árvores, é feito a média da variância para se ter uma variância moderada e um pequeno bias.
+Desvantagens: - a interpretabilidade é difícil.
 
 
 # Exemplo de uma aplicação em Python
