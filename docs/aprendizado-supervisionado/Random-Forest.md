@@ -35,7 +35,7 @@ Desvantagens:
 
 # Exemplo de uma aplicação em Python
 
-'''
+"""
 
 import pandas as pd
 from matplotlib import pyplot as plt
@@ -139,4 +139,4 @@ feature_list = list(X.columns)
 feature_imp = pd.Series(model.feature_importances_,index=feature_list).sort_values(ascending=False)
 print(feature_imp)
 
-'''
+"""
