@@ -27,386 +27,251 @@ Desvantagens:
 
 # Exemplo de uma aplicação em Python
 
+"""
+import time
+import numpy as np
+import h5py
+import matplotlib.pyplot as plt
+import scipy
+from PIL import Image
+from scipy import ndimage
+from dnn_app_utils import *
+
+%matplotlib inline
+plt.rcParams['figure.figsize'] = (5.0, 4.0) # set default size of plots
+plt.rcParams['image.interpolation'] = 'nearest'
+plt.rcParams['image.cmap'] = 'gray'
+
+%load_ext autoreload
+%autoreload 2
+
+np.random.seed(1)
+
+train_x_orig, train_y, test_x_orig, test_y, classes = load_data()
+
+# Example of a picture
+index = 10
+plt.imshow(train_x_orig[index])
+print ("y = " + str(train_y[0, index]) + ". It's a " + classes[train_y[0, index]].decode("utf-8") + " picture.")
+
+# Explore your dataset 
+m_train = train_x_orig.shape[0]
+num_px = train_x_orig.shape[1]
+m_test = test_x_orig.shape[0]
+
+print ("Number of training examples: " + str(m_train))
+print ("Number of testing examples: " + str(m_test))
+print ("Each image is of size: (" + str(num_px) + ", " + str(num_px) + ", 3)")
+print ("train_x_orig shape: " + str(train_x_orig.shape))
+print ("train_y shape: " + str(train_y.shape))
+print ("test_x_orig shape: " + str(test_x_orig.shape))
+print ("test_y shape: " + str(test_y.shape))
+
+# Reshape the training and test examples 
+train_x_flatten = train_x_orig.reshape(train_x_orig.shape[0], -1).T   # The "-1" makes reshape flatten the remaining dimensions
+test_x_flatten = test_x_orig.reshape(test_x_orig.shape[0], -1).T
+
+# Standardize data to have feature values between 0 and 1.
+train_x = train_x_flatten / 255.
+test_x = test_x_flatten / 255.
+
+print ("train_x's shape: " + str(train_x.shape))
+print ("test_x's shape: " + str(test_x.shape))
+
+### CONSTANTS DEFINING THE MODEL ####
+n_x = 12288     # num_px * num_px * 3
+n_h = 7
+n_y = 1
+layers_dims = (n_x, n_h, n_y)
+
+# GRADED FUNCTION: two_layer_model
+
+def two_layer_model(X, Y, layers_dims, learning_rate=0.0075, num_iterations=3000, print_cost=False):
+    """
+    Implements a two-layer neural network: LINEAR->RELU->LINEAR->SIGMOID.
+    
+    Arguments:
+    X -- input data, of shape (n_x, number of examples)
+    Y -- true "label" vector (containing 0 if cat, 1 if non-cat), of shape (1, number of examples)
+    layers_dims -- dimensions of the layers (n_x, n_h, n_y)
+    num_iterations -- number of iterations of the optimization loop
+    learning_rate -- learning rate of the gradient descent update rule
+    print_cost -- If set to True, this will print the cost every 100 iterations 
+    
+    Returns:
+    parameters -- a dictionary containing W1, W2, b1, and b2
+    """
+    
+    np.random.seed(1)
+    grads = {}
+    costs = []                              # to keep track of the cost
+    m = X.shape[1]                           # number of examples
+    (n_x, n_h, n_y) = layers_dims
+    
+    # Initialize parameters dictionary, by calling one of the functions you'd previously implemented
+    ### START CODE HERE ### (≈ 1 line of code)
+    parameters = initialize_parameters(n_x, n_h, n_y)
+    ### END CODE HERE ###
+    
+    # Get W1, b1, W2 and b2 from the dictionary parameters.
+    W1 = parameters["W1"]
+    b1 = parameters["b1"]
+    W2 = parameters["W2"]
+    b2 = parameters["b2"]
+    
+    # Loop (gradient descent)
+
+    for i in range(0, num_iterations):
+
+        # Forward propagation: LINEAR -> RELU -> LINEAR -> SIGMOID. Inputs: "X, W1, b1". Output: "A1, cache1, A2, cache2".
+        ### START CODE HERE ### (≈ 2 lines of code)
+        A1, cache1 = linear_activation_forward(X, W1, b1, 'relu')
+        A2, cache2 = linear_activation_forward(A1, W2, b2, 'sigmoid')
+        ### END CODE HERE ###
+        
+        # Compute cost
+        ### START CODE HERE ### (≈ 1 line of code)
+        cost = compute_cost(A2, Y)
+        ### END CODE HERE ###
+        
+        # Initializing backward propagation
+        dA2 = - (np.divide(Y, A2) - np.divide(1 - Y, 1 - A2))
+        
+        # Backward propagation. Inputs: "dA2, cache2, cache1". Outputs: "dA1, dW2, db2; also dA0 (not used), dW1, db1".
+        ### START CODE HERE ### (≈ 2 lines of code)
+        dA1, dW2, db2 = linear_activation_backward(dA2, cache2, 'sigmoid')
+        dA0, dW1, db1 = linear_activation_backward(dA1, cache1, 'relu')
+        ### END CODE HERE ###
+        
+        # Set grads['dWl'] to dW1, grads['db1'] to db1, grads['dW2'] to dW2, grads['db2'] to db2
+        grads['dW1'] = dW1
+        grads['db1'] = db1
+        grads['dW2'] = dW2
+        grads['db2'] = db2
+        
+        # Update parameters.
+        ### START CODE HERE ### (approx. 1 line of code)
+        parameters = update_parameters(parameters, grads, learning_rate)
+        ### END CODE HERE ###
+
+        # Retrieve W1, b1, W2, b2 from parameters
+        W1 = parameters["W1"]
+        b1 = parameters["b1"]
+        W2 = parameters["W2"]
+        b2 = parameters["b2"]
+        
+        # Print the cost every 100 training example
+        if print_cost and i % 100 == 0:
+            print("Cost after iteration {}: {}".format(i, np.squeeze(cost)))
+        if print_cost and i % 100 == 0:
+            costs.append(cost)
+       
+    # plot the cost
+
+    plt.plot(np.squeeze(costs))
+    plt.ylabel('cost')
+    plt.xlabel('iterations (per tens)')
+    plt.title("Learning rate =" + str(learning_rate))
+    plt.show()
+    
+    return parameters
 
 
-{
- "cells": [
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "# Generate restaurant reviews using deep learning\n",
-    "\n",
-    "This Code Pattern will guide you through installing Keras and Tensorflow, downloading data of Yelp reviews and training a language model using recurrent neural networks, or RNNs, to generate text.\n",
-    "\n",
-    "The original Yelp data used in this Code Pattern can be found on [Kaggle](https://www.kaggle.com/c/yelp-recruiting/data) and as a [zip file](https://github.com/IBM/deep-learning-language-model/blob/master/yelp_test_set.zip) in the GitHub repository.\n",
-    "\n",
-    "\n",
-    "<a id=\"section0\"></a>\n",
-    "### 0. Prerequisites\n",
-    "\n",
-    "Before you run this notebook complete the following steps:\n",
-    "- Insert a project credential\n",
-    "- Load required files\n",
-    "- Import required packages\n",
-    "\n",
-    "#### Insert a project credential\n",
-    "\n",
-    "When you import this project from the Watson Studio Gallery, a token should be automatically generated and inserted at the top of this notebook as a code cell such as the one below:\n",
-    "\n",
-    "```python\n",
-    "# @hidden_cell\n",
-    "# The following code contains the credentials for a file in your IBM Cloud Object Storage.\n",
-    "# You might want to remove those credentials before you share your notebook.\n",
-    "credentials = {\n",
-    "    'IBM_API_KEY_ID': '*******************************',\n",
-    "    'IAM_SERVICE_ID': '*******************************',\n",
-    "    'ENDPOINT': '*******************************',\n",
-    "    'IBM_AUTH_ENDPOINT': '*******************************',\n",
-    "    'BUCKET': '*******************************',\n",
-    "    'FILE': 'FILENAME.csv'\n",
-    "}\n",
-    "```\n",
-    "\n",
-    "If you do not see the cell above, follow these steps to enable the notebook to access the dataset from the project's resources:\n",
-    "\n",
-    "* Click on `More -> Insert project token` in the top-right menu section\n",
-    "\n",
-    "![ws-credential.mov](https://media.giphy.com/media/iFy3ERX0PHsOpTgogb/giphy.gif)\n",
-    "\n",
-    "* This should insert a cell at the top of this notebook similar to the example given above.\n",
-    "\n",
-    "  > If an error is displayed indicating that no project token is defined, follow [these instructions](https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/token.html?audience=wdp&context=data).\n",
-    "\n",
-    "* Run the newly inserted cell before proceeding with the notebook execution below\n",
-    "\n",
-    "\n",
-    "#### Import required packages\n",
-    "\n",
-    "Import and configure the required packages."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "from ibm_botocore.client import Config\n",
-    "import ibm_boto3"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "def download_file_cos(credentials, local_file_name, key): \n",
-    "    '''\n",
-    "    Wrapper function to download a file from cloud object storage using the\n",
-    "    credential dict provided and loading it into memory\n",
-    "    '''\n",
-    "    cos = ibm_boto3.client(service_name='s3',\n",
-    "    ibm_api_key_id=credentials['IBM_API_KEY_ID'],\n",
-    "    ibm_service_instance_id=credentials['IAM_SERVICE_ID'],\n",
-    "    ibm_auth_endpoint=credentials['IBM_AUTH_ENDPOINT'],\n",
-    "    config=Config(signature_version='oauth'),\n",
-    "    endpoint_url=credentials['ENDPOINT'])\n",
-    "    try:\n",
-    "        res=cos.download_file(Bucket=credentials['BUCKET'],Key=key,Filename=local_file_name)\n",
-    "    except Exception as e:\n",
-    "        print(Exception, e)\n",
-    "    else:\n",
-    "        print('File Downloaded')"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# @hidden_cell\n",
-    "# The following code contains the credentials for a file in your IBM Cloud Object Storage.\n",
-    "# You might want to remove those credentials before you share your notebook.\n",
-    "credentials = {\n",
-    "    'IBM_API_KEY_ID': '*******************************',\n",
-    "    'IAM_SERVICE_ID': '*******************************',\n",
-    "    'ENDPOINT': '*******************************',\n",
-    "    'IBM_AUTH_ENDPOINT': '*******************************',\n",
-    "    'BUCKET': '*******************************',\n",
-    "    'FILE': 'char_indices.txt'\n",
-    "}"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "download_file_cos(credentials,'char_indices.txt','char_indices.txt')"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# @hidden_cell\n",
-    "# The following code contains the credentials for a file in your IBM Cloud Object Storage.\n",
-    "# You might want to remove those credentials before you share your notebook.\n",
-    "credentials_1 = {\n",
-    "    'IBM_API_KEY_ID': '*******************************',\n",
-    "    'IAM_SERVICE_ID': '*******************************',\n",
-    "    'ENDPOINT': '*******************************',\n",
-    "    'IBM_AUTH_ENDPOINT': '*******************************',\n",
-    "    'BUCKET': '*******************************',\n",
-    "    'FILE': 'indices_char.txt'\n",
-    "}"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "download_file_cos(credentials_1,'indices_char.txt','indices_char.txt')"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# @hidden_cell\n",
-    "# The following code contains the credentials for a file in your IBM Cloud Object Storage.\n",
-    "# You might want to remove those credentials before you share your notebook.\n",
-    "credentials_2 = {\n",
-    "    'IBM_API_KEY_ID': '*******************************',\n",
-    "    'IAM_SERVICE_ID': '*******************************',\n",
-    "    'ENDPOINT': '*******************************',\n",
-    "    'IBM_AUTH_ENDPOINT': '*******************************',\n",
-    "    'BUCKET': '*******************************',\n",
-    "    'FILE': 'yelp_100_3.txt'\n",
-    "}"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "download_file_cos(credentials_2,'yelp_100_3.txt','yelp_100_3.txt')"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# @hidden_cell\n",
-    "# The following code contains the credentials for a file in your IBM Cloud Object Storage.\n",
-    "# You might want to remove those credentials before you share your notebook.\n",
-    "credentials_3 = {\n",
-    "    'IBM_API_KEY_ID': '*******************************',\n",
-    "    'IAM_SERVICE_ID': '*******************************',\n",
-    "    'ENDPOINT': '*******************************',\n",
-    "    'IBM_AUTH_ENDPOINT': '*******************************',\n",
-    "    'BUCKET': '*******************************',\n",
-    "    'FILE': 'transfer_weights'\n",
-    "}"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "download_file_cos(credentials_3,'transfer_weights','transfer_weights')"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# Make sure the all four files are downloaded correctly\n",
-    "!ls"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## Execute transfer_learn.py to run the model\n",
-    "#### Analyze the notebook below to help understand what transfer_learn.py is doing."
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "To help understand what we're doing here, below we use a keras sequential model of the LSTM variety, mentioned in the README of this repository. We use this variety of RNN model so that we can include hidden layers of memory to generate more accurate text. We then use the Adam optimizer with categorical_crossentropy and begin by loading our transfer_weights. We define the sample with a temperature of 0.6. The temperature here is a parameter than can be used in the softmax function which controls the level of newness generated where 1 constricts sampling and leads to less diverse/more repetitive text and 0 has completely diverse text. In this case we are leaning slightly more towards repetition though in this particular model, we generate multiple diversities which we can compare to one another to see which works best for us. We then train the model and save our weights into transfer_weights. After executing you should see tensorflow start up and then various epochs running on your screen followed by generated text."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "from __future__ import print_function\n",
-    "import json\n",
-    "from keras.models import Sequential\n",
-    "from keras.layers import Dense, Activation\n",
-    "from keras.layers import LSTM\n",
-    "from keras.optimizers import Adam\n",
-    "from keras.utils.data_utils import get_file\n",
-    "import numpy as np\n",
-    "import random\n",
-    "import sys\n",
-    "import requests\n",
-    "import pandas as pd"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "path = 'yelp_100_3.txt'\n",
-    "text = open(path).read().lower()\n",
-    "print('corpus length:', len(text))\n",
-    "char_indices = json.loads(open('char_indices.txt').read())\n",
-    "indices_char = json.loads(open('indices_char.txt').read())\n",
-    "chars = sorted(char_indices.keys())\n",
-    "print(indices_char)\n",
-    "#chars = sorted(list(set(text)))\n",
-    "print('total chars:', len(chars))\n",
-    "#char_indices = dict((c, i) for i, c in enumerate(chars))\n",
-    "#indices_char = dict((i, c) for i, c in enumerate(chars))\n",
-    "\n",
-    "# cut the text in semi-redundant sequences of maxlen characters\n",
-    "maxlen = 256\n",
-    "step = 3\n",
-    "sentences = []\n",
-    "next_chars = []\n",
-    "for i in range(0, len(text) - maxlen, step):\n",
-    "    sentences.append(text[i: i + maxlen])\n",
-    "    next_chars.append(text[i + maxlen])\n",
-    "print('nb sequences:', len(sentences))\n",
-    "\n",
-    "print('Vectorization...')\n",
-    "X = np.zeros((len(sentences), maxlen, len(chars)), dtype=np.bool)\n",
-    "y = np.zeros((len(sentences), len(chars)), dtype=np.bool)\n",
-    "for i, sentence in enumerate(sentences):\n",
-    "    for t, char in enumerate(sentence):\n",
-    "        X[i, t, char_indices[char]] = 1\n",
-    "    y[i, char_indices[next_chars[i]]] = 1\n",
-    "\n",
-    "\n",
-    "# build the model: a single LSTM\n",
-    "print('Build model...')\n",
-    "model = Sequential()\n",
-    "model.add(LSTM(1024, return_sequences=True, input_shape=(maxlen, len(chars))))\n",
-    "model.add(LSTM(512, return_sequences=False))\n",
-    "model.add(Dense(len(chars)))\n",
-    "model.add(Activation('softmax'))\n",
-    "\n",
-    "optimizer = Adam(lr=0.002)\n",
-    "model.compile(loss='categorical_crossentropy', optimizer=optimizer)\n",
-    "\n",
-    "model.load_weights(\"transfer_weights\")\n",
-    "\n",
-    "def sample(preds, temperature=.6):\n",
-    "    # helper function to sample an index from a probability array\n",
-    "    preds = np.asarray(preds).astype('float64')\n",
-    "    preds = np.log(preds) / temperature\n",
-    "    exp_preds = np.exp(preds)\n",
-    "    preds = exp_preds / np.sum(exp_preds)\n",
-    "    probas = np.random.multinomial(1, preds, 1)\n",
-    "    return np.argmax(probas)\n",
-    "\n",
-    "# train the model, output generated text after each iteration\n",
-    "for iteration in range(1, 60):\n",
-    "    print()\n",
-    "    print('-' * 50)\n",
-    "    print('Iteration', iteration)\n",
-    "    x = np.zeros((1, maxlen, len(chars)))\n",
-    "    preds = model.predict(x, verbose=0)[0]\n",
-    "    \n",
-    "    model.fit(X, y, batch_size=128, epochs=1)\n",
-    "\n",
-    "    start_index = random.randint(0, len(text) - maxlen - 1)\n",
-    "    #start_index = char_indices[\"{\"]\n",
-    "\n",
-    "    for diversity in [0.2, 0.4, 0.6, 0.8]:\n",
-    "        print()\n",
-    "        print('----- diversity:', diversity)\n",
-    "\n",
-    "        generated = ''\n",
-    "        sentence = text[start_index: start_index + maxlen]\n",
-    "        generated += sentence\n",
-    "        print('----- Generating with seed: \"' + sentence + '\"')\n",
-    "        sys.stdout.write(generated)\n",
-    "        for i in range(400):\n",
-    "            x = np.zeros((1, maxlen, len(chars)))\n",
-    "            for t, char in enumerate(sentence):\n",
-    "                x[0, t, char_indices[char]] = 1.\n",
-    "\n",
-    "            preds = model.predict(x, verbose=0)[0]\n",
-    "            next_index = sample(preds, diversity)\n",
-    "            #print(next_index)\n",
-    "            #print (indices_char)\n",
-    "            next_char = indices_char[str(next_index)]\n",
-    "\n",
-    "            generated += next_char\n",
-    "            sentence = sentence[1:] + next_char\n",
-    "\n",
-    "            sys.stdout.write(next_char)\n",
-    "            sys.stdout.flush()\n",
-    "        print()\n",
-    "model.save_weights(\"transfer_weights\")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": []
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3.6",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.6.9"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 2
-}
+parameters = two_layer_model(train_x, train_y, layers_dims = (n_x, n_h, n_y), num_iterations = 2500, print_cost=True)
 
+predictions_train = predict(train_x, train_y, parameters)
+
+predictions_test = predict(test_x, test_y, parameters)
+
+### CONSTANTS ###
+layers_dims = [12288, 20, 7, 5, 1] #  5-layer model
+
+# GRADED FUNCTION: n_layer_model
+
+def L_layer_model(X, Y, layers_dims, learning_rate=0.0075, num_iterations=3000, print_cost=False): #lr was 0.009
+    """
+    Implements a L-layer neural network: [LINEAR->RELU]*(L-1)->LINEAR->SIGMOID.
+    
+    Arguments:
+    X -- data, numpy array of shape (number of examples, num_px * num_px * 3)
+    Y -- true "label" vector (containing 0 if cat, 1 if non-cat), of shape (1, number of examples)
+    layers_dims -- list containing the input size and each layer size, of length (number of layers + 1).
+    learning_rate -- learning rate of the gradient descent update rule
+    num_iterations -- number of iterations of the optimization loop
+    print_cost -- if True, it prints the cost every 100 steps
+    
+    Returns:
+    parameters -- parameters learnt by the model. They can then be used to predict.
+    """
+
+    np.random.seed(1)
+    costs = []                         # keep track of cost
+    
+    # Parameters initialization.
+    ### START CODE HERE ###
+    parameters = initialize_parameters_deep(layers_dims)
+    ### END CODE HERE ###
+    
+    # Loop (gradient descent)
+    for i in range(0, num_iterations):
+
+        # Forward propagation: [LINEAR -> RELU]*(L-1) -> LINEAR -> SIGMOID.
+        ### START CODE HERE ### (≈ 1 line of code)
+        AL, caches = L_model_forward(X, parameters)
+        ### END CODE HERE ###
+        
+        # Compute cost.
+        ### START CODE HERE ### (≈ 1 line of code)
+        cost = compute_cost(AL, Y)
+        ### END CODE HERE ###
+    
+        # Backward propagation.
+        ### START CODE HERE ### (≈ 1 line of code)
+        grads = L_model_backward(AL, Y, caches)
+        ### END CODE HERE ###
+ 
+        # Update parameters.
+        ### START CODE HERE ### (≈ 1 line of code)
+        parameters = update_parameters(parameters, grads, learning_rate)
+        ### END CODE HERE ###
+                
+        # Print the cost every 100 training example
+        if print_cost and i % 100 == 0:
+            print ("Cost after iteration %i: %f" % (i, cost))
+        if print_cost and i % 100 == 0:
+            costs.append(cost)
+            
+    # plot the cost
+    plt.plot(np.squeeze(costs))
+    plt.ylabel('cost')
+    plt.xlabel('iterations (per tens)')
+    plt.title("Learning rate =" + str(learning_rate))
+    plt.show()
+    
+    return parameters
+    
+parameters = L_layer_model(train_x, train_y, layers_dims, num_iterations=2500, print_cost=True)
+
+pred_train = predict(train_x, train_y, parameters)
+
+pred_test = predict(test_x, test_y, parameters)
+
+print_mislabeled_images(classes, test_x, test_y, pred_test)
+
+
+## START CODE HERE ##
+my_image = "my_image.jpg" # change this to the name of your image file 
+my_label_y = [1] # the true class of your image (1 -> cat, 0 -> non-cat)
+## END CODE HERE ##
+
+fname = "images/" + my_image
+image = np.array(ndimage.imread(fname, flatten=False))
+my_image = scipy.misc.imresize(image, size=(num_px,num_px)).reshape((num_px*num_px*3,1))
+my_predicted_image = predict(my_image, my_label_y, parameters)
+
+plt.imshow(image)
+print ("y = " + str(np.squeeze(my_predicted_image)) + ", your L-layer model predicts a \"" + classes[int(np.squeeze(my_predicted_image)),].decode("utf-8") +  "\" picture.")
+
+#source = https://github.com/Kulbear/deep-learning-coursera/blob/master/Neural%20Networks%20and%20Deep%20Learning/Deep%20Neural%20Network%20-%20Application.ipynb
+
+"""
