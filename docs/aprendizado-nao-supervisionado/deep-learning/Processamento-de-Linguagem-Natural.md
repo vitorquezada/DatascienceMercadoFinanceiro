@@ -13,6 +13,9 @@ A NLP é feita para que se entenda o significado literal de cada palavra que est
 O Modelo de NLP precisa dominar dois elementos básicos de uma interação: a entidade e a intenção.
 A intenção é o elemento principal do fluxo de NLP, em um chatbot é a razão pelo qual levou um usuário a mandar a mensagem. A partir daí, no chatbot, são criados os fluxos de conversas que levam o usuário a chegar na solução do seu problema.
 
+É muito utilizado a tokenização de palavras, em que as palavras são separadas uma a uma em frases em que se correlacionam entre si e observa-se uma relação entre elas. Esta relação é aprendida pela máquina para cada frase observada, sendo possível ainda definir um limite de palavras que podem se relacionar.
+Uma outra abordagem é criar um espaço de N dimensões em que cada palavra é categorizada nesse espaço e as palavras semelhantes ficam próximas entre si. A distância entre cada uma obedece a um critério. Por exemplo as palavras 'rei' e 'rainha' estão próximas uma da outra e a uma mesma distância ( rei a uma distancia de rainha) que as palavras 'masculino' e 'feminino' que estão a mesma distância entre si de rei e rainha, porém em uma outra parte do espaço. Essa vetorização das palavras é chamada Word2Vec e é muito usada nos dias de hoje com a NLP. 
+
 # Vantagens e Desvantagens (limitações)
 O uso de NLP como um todo traz muitos avanços na linguagem. Como por exemplo analisa em larga escala documentos, manuais, emails, dados de midias sociais, tweets, reviews e mais. Permitindo que se tenha informação de forma mais assertiva e rapida que um ser humano conseguiria.
 Dessa forma com um modelo de NLP bem treinado e com boa acurácia para um determinado fim é possível reduzir custos, melhorar a satisfação do usuário e entender melhor o mercado que se deseja.
