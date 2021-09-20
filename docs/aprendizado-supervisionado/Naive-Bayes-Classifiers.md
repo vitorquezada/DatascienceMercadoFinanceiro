@@ -27,7 +27,7 @@ O classificador de Bayes se da pela fórmula abaixo:
 
 Portanto, o algoritmo considera a probabilidade de um determinado evento y acontecer de acordo com a maior combinação da prbabilidade do evento pela probabilidade das demais features.
 
-Para implementar o modelo, temos 3 algorítmos naiva bayes mais usados. Os algorítmos que variam são para calcular a probabilidade de P(xi | y), e deve ser escolhido de modo que as features de cada observação estejam de acordo com o tipo de distribuição de probabilidade especificada pelo algorítmo.
+Para implementar o modelo, temos 3 algorítmos naiva bayes mais usados. Os algorítmos que variam são para calcular a probabilidade de P(xi \| y), e deve ser escolhido de modo que as features de cada observação estejam de acordo com o tipo de distribuição de probabilidade especificada pelo algorítmo.
 
 São eles:
 
@@ -55,19 +55,22 @@ Este se baseia numa base de dados de acordo com a Distribuição Multivariada de
 
 Mesmo que não seja, BernoulliNB() irá tranformá-la em uma feature composta por valores binários.
 
-Neste modelo, P(xi | y) é dado por:
+Neste modelo, `P(xi | y)` é dado por:
 
 ![Bernoulli](./bernoulli-teorema-bayes.png)
 
-Onde P(i | y) é o parâmetro p da distribuição de Bernoulli. Assim, `P(i | y) = p` se y é verdadeiro e `P(i | y) = 1 - p` se y é falso.
+Onde `P(i | y)` é o parâmetro p da distribuição de Bernoulli. Assim, `P(i | y) = p` se y é verdadeiro e `P(i | y) = 1 - p` se y é falso.
 
 # Vantagens e Desvantagens (limitações)
 
 Vantagens:
+
 - É um algorítmo performático comparado a outros
 - Necessita poucas entradas para treinamento para chegar numa acurácia boa.
 - Utiliza conceitos de probabilidade
+
 Desvantagens:
+
 - Não considera a correlação das variáveis
 - Apenas resolve problemas de classificação
 
