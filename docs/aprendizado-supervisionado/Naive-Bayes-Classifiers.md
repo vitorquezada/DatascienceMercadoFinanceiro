@@ -23,7 +23,7 @@ O teorema se dá pela formula abaixo considerando n features:
 
 O classificador de Bayes se da pela fórmula abaixo:
 
-![Classificador de Bayes](./teorema-bayes.png)
+![Classificador de Bayes](./classificador-bayes.png)
 
 Portanto, o algoritmo considera a probabilidade de um determinado evento y acontecer de acordo com a maior combinação da prbabilidade do evento pela probabilidade das demais features.
 
