@@ -3,11 +3,21 @@ title: "K-Nearest Neighbors e Linear Models"
 ---
 # Conceito (O que é? Pra que serve?)
 
+## K-Nearest Neighbors
+
 K-Nearest Neighbors, também conhecido como "K-ésimo vizinho mais próximo" ou apenas KNN, é um algorítmo de machine learning supervisionado que é considerado como simples e fácil de implementar.
 
 O aspecto principal deste algoritmo está no fato de aproveitar a distribuição dos elementos, considerando que os elementos similares estão a uma distância próxima uns dos outros.
 
 Assim como demais algoritmos de aprendizado supervisionado, este algoritmo é usado para resolver problemas de classificação e regressão.
+
+## Linear Models
+
+Já os Linear Models, ou Modelos lineares, também são usados para resolver problemas de classificação e regressão.
+
+Este tipo de algorítmo consiste em gerar uma formula a partir de valores conhecidos, para posteriormente predizer valores desconhecidos. Eles são considerados clássicos e não oferecem uma predição tão acertiva quanto os algorítmos atuais, porém ele é relativamente rápido para ser treinado, e geralmente são de interpretação mais rápida, o que pode ser considerada uma vantagem.
+
+Os modelos lineares em comparação com o algorítmo KNN, tem uma perda, pois no caso dos modelos lineares, a predição se baseia numa linha estreira, enquanto que o KNN não depende estritamente de uma linha de paração.
 
 # Classes de Problemas com melhores resultados
 
@@ -16,6 +26,8 @@ Como o algorítmo assume que elementos similares estão próximos uns dos outros
 Por se tratar de um algorítmo simples, geralmente ele é aplicado quando poucas variáveis estão envolvidas, poucos resultados e até mesmo poucos dados de exemplo. Isso porque a medida que a quantidade destas informações aumentam, a execução do algorítmo se torna mais lenta.
 
 Apesar de resolver problemas de classificação e regressão, geralmente é usado em aplicações de recomendação de busca, que basicamente consiste em identificar elementos próximos e indica-los, ou obter os relacionados. Podemos citar como exemplo de possíveis aplicações a recomendação de filmes do netflix, artigos num blog, vídeos no youtube, dentre outros. Certamente estas empresas citadas utilizam algoritmos mais complexos que este devido a quantidade de variáveis que devem ser analisadas.
+
+Já no caso dos modelos lineares, também são utilizados em problemas simples. Este modelo é bastante utilizado no campo da estatística. Por se tratar de um modelo simples de ser entendido e ter seus resultados interpretados, ele é bastante usado para entender como a relação entre as variáveis afetam a forma da linha gerada pelo aprendizado.
 
 # Definição Teórica e Modelagem Matemática
 
@@ -47,6 +59,8 @@ Já as desvantagens, são:
 - O algorítmo fica significativamente lento com o crescimento do número de exemplos, predições, e variáveis independentes.
 
 # Exemplo de uma aplicação em Python
+
+## K-Nearest Neighbors
 
 ```python
 from collections import Counter
@@ -145,3 +159,6 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+
+## Linear Models
+
