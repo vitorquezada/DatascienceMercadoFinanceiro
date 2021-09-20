@@ -33,7 +33,7 @@ Para encontrar o melhor ponto de corte, devemos considerar algumas medidas de im
 
 Para encontrar este ótimo local, testamos as possibilidades de corte com todos os valores possíveis, e utilizamos aquele que mais nos dê maior ganho de informação, que pode ser calculado da seguinte forma:
 
-$InfoGain(R, R_e, R_d) = H(R) - \\frac{\|R_e\| * H(R_e) + \|R_d\| * H(R_d)}{\|R\|}$
+`InfoGain(R, R_e, R_d) = H(R) - (|R_e| * H(R_e) + |R_d| * H(R_d)) / |R|`
 
 Onde H é a impureza da região, R é a região atual, R_e é a sub-região da esquerda, R_d é a sub-região da direito e \|...\| é a quantidade de exemplos da região.
 
