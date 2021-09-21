@@ -27,7 +27,7 @@ Desvantagens:
 
 # Exemplo de uma aplicação em Python
 
-"""
+```
 import time
 import numpy as np
 import h5py
@@ -274,4 +274,4 @@ print ("y = " + str(np.squeeze(my_predicted_image)) + ", your L-layer model pred
 
 #source = https://github.com/Kulbear/deep-learning-coursera/blob/master/Neural%20Networks%20and%20Deep%20Learning/Deep%20Neural%20Network%20-%20Application.ipynb
 
-"""
+```
