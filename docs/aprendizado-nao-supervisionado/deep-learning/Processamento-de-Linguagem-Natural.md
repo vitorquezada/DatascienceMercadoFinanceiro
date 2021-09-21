@@ -24,7 +24,7 @@ A desvantagem de se usar NLP é que em muitos casos ela pode não entender algum
 
 # Exemplo de uma aplicação em Python
 
-"""
+```
 
 import pandas as pd
 import numpy as np
@@ -139,4 +139,4 @@ print('Largest Coef: \n{}\n'.format(feature_names[sorted_coef_index][:-11:-1]))
 print(model.predict(vect.transform(['not an issue, phone is working',
                                    'an issue, phone is not working'])))
 
-"""
+```
