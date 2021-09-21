@@ -25,7 +25,7 @@ Desvantagens:
 
 # Exemplo de uma aplicação em Python
 
-'''
+```
 print(__doc__)
 
 import numpy as np
@@ -92,4 +92,4 @@ for k, col in zip(unique_labels, colors):
 
 plt.title('Estimated number of clusters: %d' % n_clusters_)
 plt.show()
-'''
+```
