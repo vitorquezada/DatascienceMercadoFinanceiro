@@ -1,7 +1,7 @@
 1. [Aprendizado Supervisionado](aprendizado-supervisionado)
     1. [K-Nearest Neighbors e Linear Models](aprendizado-supervisionado/k-nearest-neighbors-e-linear-models)
     2. [Naive Bayes Classifiers](aprendizado-supervisionado/Naive-Bayes-Classifiers)
-    3. [Decision Trees e Ensembles of Decisions Trees](aprendizado-supervisionado/Decision-Trees-e-Ensembles-of-Decisions-Trees) **(Vitor Quezada)**
+    3. [Decision Trees e Ensembles of Decisions Trees](aprendizado-supervisionado/Decision-Trees-e-Ensembles-of-Decisions-Trees)
     4. [Support Vector Machines](aprendizado-supervisionado/Support-Vector-Machines)
     5. [Neural Networks](aprendizado-supervisionado/Neural-Networks) **(Amanda Costa)**
     6. [Random Forest](aprendizado-supervisionado/Random-Forest) **(Victor)**
