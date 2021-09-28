@@ -14,8 +14,49 @@ Podemos começar a responder isso com K-means.
  
 # Classes de Problemas com melhores resultados
 
+Quantização vetorial
+K-means se origina do processamento de sinal, mas também é usado para quantização vetorial. Por exemplo, a quantização de cores é a tarefa de reduzir a paleta de cores de uma imagem a um número fixo de cores k . O algoritmo k-means pode ser facilmente usado para essa tarefa.
+
+Psicologia e medicina
+Uma doença ou condição freqüentemente tem uma série de variações e a análise de agrupamento pode ser usada para identificar essas diferentes subcategorias. Por exemplo, o agrupamento foi usado para identificar diferentes tipos de depressão. A análise de agrupamento também pode ser usada para detectar padrões na distribuição espacial ou temporal de uma doença.
+
+Sistemas de Recomendação
+O armazenamento em cluster também pode ser usado em mecanismos de recomendação . No caso de recomendar filmes a alguém, você pode ver os filmes apreciados por um usuário e então usar o agrupamento para encontrar filmes semelhantes.
+
+Clustering de documentos
+Esta é outra aplicação comum de clustering. Digamos que você tenha vários documentos e precise agrupar documentos semelhantes. O clustering nos ajuda a agrupar esses documentos de forma que documentos semelhantes fiquem nos mesmos clusters.
 
 # Definição Teórica e Modelagem Matemática
+O algoritmo de agrupamento k-means
+O agrupamento K-means é uma técnica de agrupamento parcial baseada em protótipo que tenta encontrar um número de clusters (k) especificado pelo usuário, que são representados por seus centróides.
+
+*Procedimento*
+
+Primeiro, escolhemos k centróides iniciais, onde k é um parâmetro especificado pelo usuário; ou seja, o número de clusters desejado. Cada ponto é então atribuído ao centróide mais próximo, e cada coleção de pontos atribuídos a um centróide é chamada de cluster. O centróide de cada cluster é então atualizado com base nos pontos atribuídos ao cluster. Repetimos as etapas de atribuição e atualização até que nenhum ponto mude os clusters, ou similarmente, até que os centróides permaneçam os mesmos.
+
+
+![image](https://user-images.githubusercontent.com/51426454/135013345-c1157e96-1f09-4ffb-a43a-64ff4668a995.png)
+
+*Medidas de Proximidade*
+Para clustering, precisamos definir uma medida de proximidade para dois pontos de dados. A proximidade aqui significa o quão semelhantes / diferentes as amostras são em relação umas às outras.
+A medida de similaridade é grande se os recursos são semelhantes.
+A medida de dissimilaridade é pequena se os recursos são semelhantes.
+
+*Dados no Espaço Euclidiano*
+Considere os dados cuja medida de proximidade é a distância euclidiana . Para nossa função objetivo, que mede a qualidade de um agrupamento, usamos a soma do erro quadrático (SSE) , que também é conhecido como dispersão .
+Em outras palavras, calculamos o erro de cada ponto de dados, ou seja, sua distância euclidiana até o centróide mais próximo, e então calculamos a soma total dos erros quadrados. Dados dois conjuntos diferentes de clusters que são produzidos por duas execuções diferentes de K-médias, preferimos aquele com o menor erro quadrático, pois isso significa que os protótipos (centróides) deste cluster são uma melhor representação dos pontos em seu cluster .
+
+![image](https://user-images.githubusercontent.com/51426454/135013449-dec3cc1d-b3bc-4ab8-9518-c4329b9140e4.png)
+
+*Dados do Documento*
+Para ilustrar que K-means não se restringe aos dados no espaço euclidiano, consideramos os dados do documento e a medida de similaridade do cosseno:
+![image](https://user-images.githubusercontent.com/51426454/135013489-50e6b0a8-9a28-4f1e-a272-d7c8e4643748.png)
+
+*Implementação no scikit-learn*
+São necessárias apenas quatro linhas para aplicar o algoritmo em Python com sklearn: importe o classificador, crie uma instância, ajuste os dados no conjunto de treinamento e preveja resultados para o conjunto de teste:
+
+![image](https://user-images.githubusercontent.com/51426454/135013540-ccfb53a1-0a81-484a-9a70-93d7cb5495a7.png)
+
 
 
 # Vantagens e Desvantagens (limitações)
